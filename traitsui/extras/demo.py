@@ -26,13 +26,14 @@ from __future__ import absolute_import
 
 import sys
 import glob
+import operator
 import token
 import tokenize
 from StringIO import StringIO
 from configobj import ConfigObj
 
 from traits.api import (HasTraits, HasPrivateTraits, Str, Instance, Property,
-                        Any, Code, HTML, true, false, Dict)
+                        Any, Code, HTML, true, false, Dict, Tuple)
 
 from traitsui.api import (TreeEditor, ObjectTreeNode, TreeNodeObject, View,
                           Item, VSplit, Tabbed, VGroup, HGroup, Heading,
@@ -130,6 +131,9 @@ class DemoFileHandler ( Handler ):
     # The current 'info' object (for use by the 'write' method):
     info = Instance( UIInfo )
 
+    # Original stdout/stderr
+    stdstream = Tuple
+
     #---------------------------------------------------------------------------
     #  Initializes the view:
     #---------------------------------------------------------------------------
@@ -141,6 +145,7 @@ class DemoFileHandler ( Handler ):
         # Set up the 'print' logger:
         df         = info.object
         df.log     = ''
+        self.stdstream = sys.stdout, sys.stderr
         sys.stdout = sys.stderr = self
 
         # Read in the demo source file:
@@ -192,6 +197,7 @@ class DemoFileHandler ( Handler ):
     def closed ( self, info, is_ok ):
         """ Closes the view.
         """
+        sys.stdout, sys.stderr = self.stdstream
         info.object.demo = None
 
     #---------------------------------------------------------------------------
@@ -217,7 +223,10 @@ class DemoFileHandler ( Handler ):
     #---------------------------------------------------------------------------
 
     def write ( self, text ):
+        # Restore original stdstreams to prevent recursions with stack overflow
+        sys.stdout, sys.stderr = self.stdstream
         self.info.object.log += text
+        sys.stdout = sys.stderr = self
 
     def flush ( self ):
         pass
@@ -682,8 +691,9 @@ class DemoPath ( DemoTreeNodeObject ):
                         file.nice_name = keyword
                         files.append(file)
 
-        dirs.sort( lambda l, r: cmp( l.nice_name, r.nice_name ) )
-        files.sort( lambda l, r: cmp( l.nice_name, r.nice_name ) )
+        sort_key = operator.attrgetter('nice_name')
+        dirs.sort( key=sort_key )
+        files.sort( key=sort_key )
 
         return (dirs + files)
 

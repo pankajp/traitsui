@@ -204,7 +204,13 @@ class Group ( ViewSubElement ):
     def __init__ ( self, *values, **traits ):
         """ Initializes the group object.
         """
-        super( ViewSubElement, self ).__init__( **traits )
+        if 'shadow' in traits:
+            # Shadow needs to be set first for correct initialization order
+            # of delegate traits, else DelegationError is raised occasionally
+            super( ViewSubElement, self ).__init__( shadow=traits.pop('shadow') )
+            self.trait_set(**traits)
+        else:
+            super( ViewSubElement, self ).__init__( **traits )
 
         content = self.content
 
