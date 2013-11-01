@@ -18,7 +18,7 @@ using pickle.
 #-------------------------------------------------------------------------------
 
 from cPickle import dumps, load, loads, PickleError
-from cStringIO import StringIO
+from io import BytesIO
 import warnings
 
 from pyface.qt import QtCore, QtGui
@@ -113,7 +113,7 @@ class PyMimeData(QtCore.QMimeData):
             # We have no pickled python data defined.
             return None
 
-        io = StringIO(str(self.data(self.MIME_TYPE)))
+        io = BytesIO(bytes(self.data(self.MIME_TYPE)))
 
         try:
             # Skip the type.
@@ -134,7 +134,7 @@ class PyMimeData(QtCore.QMimeData):
 
         try:
             if self.hasFormat(self.MIME_TYPE):
-                return loads(str(self.data(self.MIME_TYPE)))
+                return loads(bytes(self.data(self.MIME_TYPE)))
         except PickleError:
             pass
 

@@ -5,7 +5,6 @@ Created on Fri Sep 20 13:17:20 2013
 @author: yves
 """
 
-from __future__ import division,print_function,unicode_literals,absolute_import
 
 from traits.has_traits import HasTraits
 from traits.trait_types import Int,Tuple
@@ -46,10 +45,12 @@ def test_qt_tuple_editor():
 
         # text element inside the spin control
         lineedits = ui.control.findChildren(qt.QtGui.QLineEdit)
-        lineedits[0].setFocus()
         lineedits[0].setText('4')
-        lineedits[1].setFocus()
+        # textEdited needs to be emitted as it is not emitted when
+        # the text is programatically changed.
+        lineedits[0].textEdited.emit(lineedits[0].text())
         lineedits[1].setText('6')
+        lineedits[1].textEdited.emit(lineedits[1].text())
 
         # press the OK button and close the dialog
         press_ok_button(ui)
