@@ -66,7 +66,7 @@ class Address(HasTraits):
     """
 
     street_address = Str
-    state          = Enum(cities.keys()[0], cities.keys())
+    state          = Enum(list(cities.keys())[0], list(cities.keys()))
     city           = Str
 
     view = View(

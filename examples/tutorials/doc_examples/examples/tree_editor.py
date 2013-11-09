@@ -114,8 +114,8 @@ class TreeHandler ( Handler ):
 
     def employee_department ( self, editor, object ):
         dept = editor.get_parent( object )
-        print '%s works in the %s department.' %\
-            ( object.name, dept.name )
+        print('%s works in the %s department.' %\
+            ( object.name, dept.name ))
 
 # Tree editor
 tree_editor = TreeEditor(

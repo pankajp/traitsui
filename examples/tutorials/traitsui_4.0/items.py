@@ -92,6 +92,7 @@ from traitsui.api \
 
 from traitsui.table_column \
     import *
+from functools import reduce
 
 #--[Player Class]---------------------------------------------------------------
 

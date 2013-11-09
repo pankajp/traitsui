@@ -393,7 +393,7 @@ class SourceFile ( HasTraits ):
     @property_depends_on( 'full_name' )
     def _get_contents ( self ):
         try:
-            fh = open( self.full_name, 'rb' )
+            fh = open( self.full_name, 'r' )
             contents = fh.readlines()
             fh.close()
             return contents

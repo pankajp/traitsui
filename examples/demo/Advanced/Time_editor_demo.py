@@ -26,7 +26,7 @@ class TimeEditorDemo(HasTraits):
 
     def _time_changed(self):
         """ Print each time the time value is changed in the editor. """
-        print self.time
+        print(self.time)
 
 
 #-- Set Up The Demo ------------------------------------------------------------

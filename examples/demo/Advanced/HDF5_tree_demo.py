@@ -156,7 +156,7 @@ if __name__ == '__main__':
             )
 
         def _node_changed(self):
-            print self.node.path
+            print(self.node.path)
 
 
     a_tree = ATree( h5_tree = _hdf5_tree('/path/to/file.h5')  )

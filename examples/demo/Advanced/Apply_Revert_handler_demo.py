@@ -22,7 +22,7 @@ class ApplyRevert_Handler(Handler):
 
     def revert(self, info):
         # Do something exciting here...
-        print 'revert called...'
+        print('revert called...')
 
 # 'ApplyRevertDemo' class:
 class ApplyRevertDemo(HasTraits):

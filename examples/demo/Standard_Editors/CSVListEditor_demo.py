@@ -116,7 +116,7 @@ class Demo(HasTraits):
     def _pop1_fired(self):
         if len(self.list1) > 0:
             x = self.list1.pop()
-            print x
+            print(x)
 
     def _sort1_fired(self):
         self.list1.sort()

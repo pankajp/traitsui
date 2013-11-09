@@ -152,7 +152,7 @@ class Factors ( HasTraits ):
 
     @property_depends_on( 'max_n' )
     def _get_factors ( self ):
-        return [ Factor( n = i + 1 ) for i in xrange( self.max_n ) ]
+        return [ Factor( n = i + 1 ) for i in range( self.max_n ) ]
 
 #-- Create and run the demo ----------------------------------------------------
 
