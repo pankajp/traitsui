@@ -331,7 +331,7 @@ def color_editor_for(editor, parent):
     mapper = QtCore.QSignalMapper(panel)
 
     rows = 4
-    cols = len(color_samples) / rows
+    cols = len(color_samples) // rows
     i = 0
 
     sheet_template = """

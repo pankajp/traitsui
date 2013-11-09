@@ -629,8 +629,9 @@ class DemoPath ( DemoTreeNodeObject ):
                 if (ext == '.py') and (name != '__init__'):
                     files.append( DemoFile( parent = self, name = name ) )
 
-        dirs.sort(  lambda l, r: cmp( l.name, r.name ) )
-        files.sort( lambda l, r: cmp( l.name, r.name ) )
+        sort_key = operator.attrgetter('name')
+        dirs.sort( key=sort_key )
+        files.sort( key=sort_key )
 
         return (dirs + files)
 

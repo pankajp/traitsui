@@ -25,6 +25,8 @@
 
 from __future__ import absolute_import
 
+import sys
+
 from traits.api import (Any, Bool, Callable, Color, Constant, Either, Enum,
     Expression, Float, Font, HasPrivateTraits, Instance, Int, Property, Str)
 
@@ -45,6 +47,10 @@ logger = logging.getLogger( __name__ )
 
 # Flag used to indicate user has not specified a column label
 UndefinedLabel = '???'
+
+if sys.version_info[0] >= 3:
+    def cmp(v1, v2):
+        return (v1 > v2) - (v1 < v2)
 
 #-------------------------------------------------------------------------------
 #  'TableColumn' class:
