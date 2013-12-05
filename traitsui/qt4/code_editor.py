@@ -90,6 +90,9 @@ class SourceEditor ( Editor ):
     # The current column
     column = Event
 
+    # Show line numbers
+    show_line_numbers = Bool
+
     # The lines to be dimmed
     dim_lines = List(Int)
     dim_color = Str
@@ -129,6 +132,10 @@ class SourceEditor ( Editor ):
             code_editor.selectionChanged.connect(self._selection_changed)
         if (factory.line != '') or (factory.column != ''):
             code_editor.cursorPositionChanged.connect(self._position_changed)
+
+        self.show_line_numbers = factory.show_line_numbers
+        control.code.line_number_widget.setVisible(self.show_line_numbers)
+        self.sync_trait('show_line_numbers', factory)
 
         # Make sure the editor has been initialized:
         self.update_editor()
@@ -354,7 +361,9 @@ class SourceEditor ( Editor ):
     def _style_document(self):
         self._widget.set_warn_lines(self.squiggle_lines)
 
-
+    @on_trait_change('show_line_numbers')
+    def _on_show_line_numbers_changed(self):
+        self._widget.code.line_number_widget.setVisible(self.show_line_numbers)
 
 
 # Define the simple, custom, text and readonly editors, which will be accessed
